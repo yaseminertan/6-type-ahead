@@ -12,7 +12,7 @@
         </div>
         <div class="list">
             <ul class="items">
-                <li></li>
+                
             </ul>
         </div>
     </div>
@@ -39,9 +39,15 @@
     }
     .active{
         display:block;
-        height: 30px;
+        height: 20px;
     }
-   
+    li{
+        background-color: whitesmoke;
+        list-style: none;
+        border-bottom: 1px solid #D8D8D8;
+        margin: 0;
+        padding: 10px;
+    }
 
 </style>
 <script>
@@ -62,7 +68,7 @@
             return item.city.match(reg) || item.state.match(reg);
         });
         const listItems=result.map(item =>
-            `<li><span class="item">${item.state}</span></li>`
+            `<li><span class="item">${item.city} ${item.state}</span></li>`
         );
 
         items.innerHTML=listItems.join(' ');
