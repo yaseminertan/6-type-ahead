@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div>
+            <input type="text" class="search">
+        </div>
+        <div class="list">
+            <ul class="items">
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    
+</body>
+<style>
+    body{
+        background-color: antiquewhite;
+        display: flex;
+        min-height: 100vh;
+        align-items: center; 
+        justify-content: center;   
+    }
+
+    .search{
+        height: 40px;
+        border:1px solid rgba(83, 85, 87, 0.5);
+        border-radius: 5%;
+        font-size: larger;
+    }
+
+    .items{
+        display: none;
+    }
+    .active{
+        display:block;
+        height: 30px;
+    }
+   
+
+</style>
+<script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    const cities = [];
+    fetch(endpoint)
+        .then(blob => blob.json())
+        .then(data => cities.push(...data));
+
+    const search=document.querySelector('.search');
+    const items=document.querySelector('.items');
+    search.addEventListener('keyup',find);
+   
+
+    function find(){
+        const reg=new RegExp(this.value,'gi');
+        const result=cities.filter(item => {
+            return item.city.match(reg) || item.state.match(reg);
+        });
+        const listItems=result.map(item =>
+            `<li><span class="item">${item.state}</span></li>`
+        );
+
+        items.innerHTML=listItems.join(' ');
+        items.classList.add('active');
+    }
+</script>
+</html>
